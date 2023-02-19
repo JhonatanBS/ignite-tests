@@ -27,7 +27,7 @@ describe("Create Statement Controller", () => {
 		await connection.close();
 	});
 
-	it("shoud be able of create a statement for the user", async () => {
+	it("shoud be able of create a statement of deposit for the user", async () => {
 
 		const loginUser = await request(app).post("/api/v1/sessions").send({
 			email: 'test@gmail.com',
@@ -38,7 +38,7 @@ describe("Create Statement Controller", () => {
 		const { token } = loginUser.body;
 
 		const createStatement = {
-			amount: 500,
+			amount: 900,
 			description: "Deposit with Pix"
 		}
 
@@ -52,6 +52,34 @@ describe("Create Statement Controller", () => {
 		});
 
     expect(response.status).toBe(201);
+
 	});
+
+	it("shoud be able of create a statement of withdraw for the user", async () => {
+
+		const loginUser = await request(app).post("/api/v1/sessions").send({
+			email: 'test@gmail.com',
+			password: '1234'
+		});
+
+		const { id } = loginUser.body.user;
+		const { token } = loginUser.body;
+
+		const createStatement = {
+			amount: 550,
+			description: "Withdraw with Pix"
+		}
+
+		const response = await request(app).post("/api/v1/statements/withdraw").send({
+			id,
+			amount: createStatement.amount,
+			type: "withdraw",
+			description: createStatement.description
+		}).set({
+			Authorization: `Bearer ${token}`
+		});
+        
+		expect(response.status).toBe(201);
+    });
 
 });
