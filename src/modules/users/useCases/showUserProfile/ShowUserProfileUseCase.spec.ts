@@ -67,6 +67,4 @@ describe("Authenticate User", () => {
 		}).rejects.toBeInstanceOf(ShowUserProfileError);
 	});
 
-	
-
 });
