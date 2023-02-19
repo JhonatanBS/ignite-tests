@@ -13,12 +13,12 @@ let createUserUseCase: CreateUserUseCase;
 describe("Authenticate User", () => {
 	beforeEach(() => {
 		inMemoryUsersRepository = new InMemoryUsersRepository();
-	  createUserUseCase = new CreateUserUseCase(inMemoryUsersRepository);
+		createUserUseCase = new CreateUserUseCase(inMemoryUsersRepository);
 		authenticateUserUseCase = new AuthenticateUserUseCase(inMemoryUsersRepository);
 	});
 
 	it("should be able to authenticate an user", async () => {
-    const user: ICreateUserDTO = {
+		const user: ICreateUserDTO = {
 			name: "Dani",
 			email: "dani@gmail.com",
 			password: "1234"
@@ -35,17 +35,17 @@ describe("Authenticate User", () => {
 
 	});
 
-  it("should not be able to authenticate an nonexistent user", () => {
+	it("should not be able to authenticate an nonexistent user", () => {
 		expect(async () => {
-				await authenticateUserUseCase.execute({
-					email: "emailnotexists@gmail.com",
-					password: "12345"
-				});
-			}).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
+			await authenticateUserUseCase.execute({
+				email: "emailnotexists@gmail.com",
+				password: "12345"
+			});
+		}).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
 	});
 
-  it("should bot be able to authenticate with incorrect password", () => {
-		expect( async () => {
+	it("should bot be able to authenticate with incorrect password", () => {
+		expect(async () => {
 			const user: ICreateUserDTO = {
 				name: "Danilo",
 				email: "danilo@gmail.com",
